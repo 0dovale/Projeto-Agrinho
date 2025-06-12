@@ -1,65 +1,630 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Agrinho - Conexão Campo Cidade</title>
-
-  <!-- Tailwind e Fontes -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- Configuração Tailwind -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#2e7d32',
-            secondary: '#81c784',
-            accent: '#ff9800',
-            dark: '#1b5e20',
-            light: '#e8f5e9'
-          },
-          fontFamily: {
-            sans: ['Poppins', 'sans-serif'],
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'fade-in': 'fadeIn 1s ease-in',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-20px)' },
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrinho - Conexão Campo Cidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2e7d32',
+                        secondary: '#81c784',
+                        accent: '#ff9800',
+                        dark: '#1b5e20',
+                        light: '#e8f5e9'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1s ease-in',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
-
-  <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="style.css" />
+    </script>
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .blur-overlay {
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .floating-icons {
+            animation: float 6s ease-in-out infinite;
+        }
+        .delayed-animation {
+            animation: fadeIn 1s ease-in 0.5s both;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .stats-item {
+            transition: all 0.3s ease;
+        }
+        .stats-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-leaf text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-primary">Projeto - Agrinho</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#inicio" class="text-gray-900 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                    <a href="#sobre" class="text-gray-900 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Sobre</a>
+                    <a href="#importancia" class="text-gray-900 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Importância</a>
+                    <a href="#projetos" class="text-gray-900 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Projetos</a>
+                    <a href="#contato" class="text-gray-900 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Contato</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-button p-2 rounded-md inline-flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-  <!-- Conteúdo principal -->
-  <!-- TODO: Inclui todas as seções do site aqui -->
-  <!-- Copie tudo de <nav> até </footer> aqui sem alterações -->
-  <!-- ... -->
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary">Início</a>
+                <a href="#sobre" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Sobre</a>
+                <a href="#importancia" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Importância</a>
+                <a href="#projetos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Projetos</a>
+                <a href="#contato" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Contato</a>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Botão de voltar ao topo -->
-  <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-dark transition-colors opacity-0 invisible">
-    <i class="fas fa-arrow-up"></i>
-  </button>
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-bg relative h-screen flex items-center justify-center text-center text-white">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 px-4 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">Conexão <span class="text-primary">Campo</span> e <span class="text-accent">Cidade</span></h1>
+            <p class="text-lg md:text-xl mb-8 animate-fade-in">Unindo os pilares da sociedade moderna através da agricultura sustentável e tecnologia inovadora.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#sobre" class="px-8 py-3 bg-primary hover:bg-dark rounded-full font-semibold transition-all transform hover:scale-105">Saiba Mais</a>
+                <a href="#projetos" class="px-8 py-3 border-2 border-white hover:border-primary hover:text-primary rounded-full font-semibold transition-all transform hover:scale-105">Nossos Projetos</a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <a href="#sobre" class="animate-bounce inline-block">
+                <i class="fas fa-chevron-down text-2xl text-white"></i>
+            </a>
+        </div>
+    </section>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+    <!-- About Section -->
+    <section id="sobre" class="py-20 bg-gradient-to-b from-white to-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Sobre o <span class="text-dark">Agrinho</span></h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto text-lg">O programa Agrinho promove a integração entre o campo e a cidade, mostrando como ambos são essenciais para o desenvolvimento sustentável do nosso país.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="relative">
+                    <div class="relative overflow-hidden rounded-xl shadow-2xl">
+                        <img src="goku5.png" alt="Campo" class="w-full h-auto transition duration-500 transform hover:scale-110">
+                    </div>
+                    <div class="absolute -bottom-5 -right-5 bg-accent text-white p-4 rounded-xl shadow-lg">
+                        <i class="fas fa-tractor text-3xl"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-dark mb-4">Juntos somos mais fortes</h3>
+                    <p class="text-gray-700 mb-6">O projeto "Conexão Campo Cidade" busca aproximar realidades distintas, mostrando como a produção agrícola sustenta a vida urbana e como a tecnologia da cidade pode melhorar a vida no campo.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Intercâmbio de Conhecimento</h4>
+                                <p class="text-gray-600">Promovemos o compartilhamento de tecnologias e práticas entre agricultores e urbanos.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Sustentabilidade</h4>
+                                <p class="text-gray-600">Desenvolvemos ações que promovem a produção agrícola sustentável e seu impacto positivo nas cidades.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Integração Social</h4>
+                                <p class="text-gray-600">Criamos pontes entre comunidades rurais e urbanas para fortalecer a compreensão mútua.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-primary text-white parallax" style="background-image: linear-gradient(rgba(46, 125, 50, 0.9), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="stats-item p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="120">0</span>+</div>
+                    <div class="text-sm uppercase tracking-wider">Escolas Participantes</div>
+                </div>
+                <div class="stats-item p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="5000">0</span>+</div>
+                    <div class="text-sm uppercase tracking-wider">Alunos Engajados</div>
+                </div>
+                <div class="stats-item p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="50">0</span>+</div>
+                    <div class="text-sm uppercase tracking-wider">Comunidades Rurais</div>
+                </div>
+                <div class="stats-item p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="15">0</span>+</div>
+                    <div class="text-sm uppercase tracking-wider">Parceiros Urbanos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Importance Section -->
+    <section id="importancia" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Por que essa conexão é importante?</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto text-lg">Entenda como a integração entre campo e cidade beneficia toda a sociedade e o meio ambiente.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-utensils text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Segurança Alimentar</h3>
+                    <p class="text-gray-700">A produção agrícola no campo é essencial para abastecer as cidades com alimentos frescos e nutritivos.</p>
+                </div>
+                
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Desenvolvimento Econômico</h3>
+                    <p class="text-gray-700">A relação comercial entre campo e cidade movimenta a economia e gera empregos em ambas as áreas.</p>
+                </div>
+                
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Sustentabilidade</h3>
+                    <p class="text-gray-700">Práticas agrícolas sustentáveis no campo contribuem para a qualidade ambiental nas cidades.</p>
+                </div>
+                
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Inovação</h3>
+                    <p class="text-gray-700">A tecnologia desenvolvida nas cidades pode melhorar a produtividade e qualidade de vida no campo.</p>
+                </div>
+                
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Cultura e Valorização</h3>
+                    <p class="text-gray-700">A troca cultural entre campo e cidade promove o respeito e valorização mútuos.</p>
+                </div>
+                
+                <div class="card-hover bg-light rounded-xl p-6 shadow-md transition-all duration-300">
+                    <div class="bg-primary text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-truck text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Logística e Distribuição</h3>
+                    <p class="text-gray-700">Sistemas eficientes de transporte garantem que os produtos do campo cheguem frescos à cidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projetos" class="py-20 bg-gradient-to-b from-light to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Nossos <span class="text-dark">Projetos</span></h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto text-lg">Conheça algumas iniciativas que estão fortalecendo a conexão entre campo e cidade.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="goku4.png" alt="Feira na Escola" class="w-full h-full object-cover transition duration-500 transform hover:scale-110">
+                        <div class="absolute bottom-0 left-0 bg-primary text-white px-4 py-1 text-sm font-semibold">
+                            Em andamento
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">Feira na Escola</h3>
+                        <p class="text-gray-700 mb-4">Agricultores locais levam seus produtos para feiras escolares, promovendo o contato direto entre produtores e estudantes.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-500"><i class="fas fa-calendar-alt mr-1"></i> Mensal</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="goku3.png" alt="Visita ao Campo" class="w-full h-full object-cover transition duration-500 transform hover:scale-110">
+                        <div class="absolute bottom-0 left-0 bg-accent text-white px-4 py-1 text-sm font-semibold">
+                            Nova Edição
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">Visita ao Campo</h3>
+                        <p class="text-gray-700 mb-4">Estudantes urbanos visitam propriedades rurais para conhecer de perto o processo de produção de alimentos.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-500"><i class="fas fa-users mr-1"></i> 200+ participantes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="goku2.png" alt="Hortas Urbanas" class="w-full h-full object-cover transition duration-500 transform hover:scale-110">
+                        <div class="absolute bottom-0 left-0 bg-primary text-white px-4 py-1 text-sm font-semibold">
+                            Multiplicando
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">Hortas Urbanas</h3>
+                        <p class="text-gray-700 mb-4">Capacitação de comunidades urbanas para cultivo de hortas comunitárias, aproximando-as da realidade agrícola.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-500"><i class="fas fa-seedling mr-1"></i> 15 comunidades</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Depoimentos</h2>
+                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto text-lg">Veja o que estão dizendo sobre o projeto Agrinho e a conexão campo-cidade.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md relative">
+                    <div class="absolute -top-4 -left-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6">"Participar do projeto mudou minha visão sobre a origem dos alimentos. Agora valorizo muito mais o trabalho dos agricultores."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Silva" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-dark">Maria Silva</h4>
+                            <p class="text-sm text-gray-600">Professora - Escola Municipal</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md relative">
+                    <div class="absolute -top-4 -left-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6">"Nossa produção ganhou novos mercados após o contato direto com escolas e comunidades urbanas através do Agrinho."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="João Santos" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-dark">João Santos</h4>
+                            <p class="text-sm text-gray-600">Agricultor Familiar</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md relative">
+                    <div class="absolute -top-4 -left-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6">"Meus alunos nunca tinham visto uma plantação de perto. A experiência foi transformadora para todos nós."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana Oliveira" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-dark">Ana Oliveira</h4>
+                            <p class="text-sm text-gray-600">Coordenadora Pedagógica</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-20 bg-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Entre em Contato</h2>
+                    <p class="text-gray-300 mb-8">Quer saber mais sobre o projeto Agrinho ou como participar? Mande sua mensagem que retornaremos o mais breve possível.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Endereço</h4>
+                                <p class="text-gray-300">Rua das Hortaliças, 123 - Zona Rural</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Telefone</h4>
+                                <p class="text-gray-300">(41) 98765-4321</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary rounded-lg p-2 text-white mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Email</h4>
+                                <p class="text-gray-300">contato@agrinho.org.br</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex space-x-4">
+                        <a href="#" class="bg-primary hover:bg-white hover:text-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="bg-primary hover:bg-white hover:text-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-primary hover:bg-white hover:text-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="bg-primary hover:bg-white hover:text-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-sm">
+                    <form>
+                        <div class="mb-6">
+                            <label for="name" class="block text-sm font-medium mb-2">Nome</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium mb-2">Mensagem</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-primary hover:bg-white text-white hover:text-dark rounded-lg font-semibold transition-colors">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-leaf text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-white">Agrinho</span>
+                    </div>
+                    <p class="mb-4">Promovendo a conexão entre campo e cidade para um futuro mais sustentável e integrado.</p>
+                    <p>&copy; 2023 Agrinho. Todos os direitos reservados.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#inicio" class="hover:text-primary transition-colors">Início</a></li>
+                        <li><a href="#sobre" class="hover:text-primary transition-colors">Sobre</a></li>
+                        <li><a href="#importancia" class="hover:text-primary transition-colors">Importância</a></li>
+                        <li><a href="#projetos" class="hover:text-primary transition-colors">Projetos</a></li>
+                        <li><a href="#contato" class="hover:text-primary transition-colors">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Projetos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary transition-colors">Feira na Escola</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Visita ao Campo</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Hortas Urbanas</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Conexão Tecnológica</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Alimentação Saudável</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contato</h4>
+                    <address class="not-italic">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-primary"></i> Rua das Hortaliças, 123</p>
+                        <p class="mb-2"><i class="fas fa-phone-alt mr-2 text-primary"></i> (41) 98765-4321</p>
+                        <p class="mb-2"><i class="fas fa-envelope mr-2 text-primary"></i> contato@agrinho.org.br</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="text-sm">
+                    <a href="#" class="hover:text-primary transition-colors mr-4">Política de Privacidade</a>
+                    <a href="#" class="hover:text-primary transition-colors">Termos de Uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-dark transition-colors opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        
+        function startCounters() {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target && isElementInViewport(counter)) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(startCounters, 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+        
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        
+        window.addEventListener('load', startCounters);
+        window.addEventListener('scroll', startCounters);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
